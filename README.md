@@ -199,8 +199,9 @@ If you use this library in your research, please cite:
 ```bibtex
 @software{forbidden_sets,
   title={Forbidden Sets: Theoretical RL Research Library},
-  author={Your Name},
+  author={Muhammmad Samuel Qudus},
   year={2026},
   description={Python library for studying elimination-based learning complexity}
 }
 ```
+
