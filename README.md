@@ -97,10 +97,10 @@ forbidden_sets/
 │   ├── experiment.py  # ExperimentRunner, ExperimentConfig
 │   └── plotting.py    # Log-log visualization
 └── experiments/       # Paper reproductions
-    ├── polynomial_growth.py  # Experiment A
-    ├── aliasing_stress.py    # Experiment B
-    ├── history_recovery.py   # Experiment C
-    └── representation.py     # Experiments D, E, F, H
+    ├── polynomial_growth.py  
+    ├── aliasing_stress.py    
+    ├── history_recovery.py   
+    └── representation.py     
 ```
 
 ## Key Concepts
@@ -204,4 +204,5 @@ If you use this library in your research, please cite:
   description={Python library for studying elimination-based learning complexity}
 }
 ```
+
 
