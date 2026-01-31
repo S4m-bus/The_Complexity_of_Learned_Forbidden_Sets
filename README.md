@@ -190,7 +190,7 @@ These would be inappropriate for the theoretical framework being studied. All ag
 
 ## License
 
-[Your License Here]
+MIT License
 
 ## Citation
 
@@ -204,5 +204,6 @@ If you use this library in your research, please cite:
   description={Python library for studying elimination-based learning complexity}
 }
 ```
+
 
 
