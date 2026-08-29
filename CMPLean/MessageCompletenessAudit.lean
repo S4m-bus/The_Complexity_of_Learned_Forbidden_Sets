@@ -30,7 +30,9 @@ theorem scalarCMPMessage_eq_univ {y : ℝ} (hy : y ≠ 0) :
   · intro hs
     refine ⟨-s, -s / y, s, ?_, ?_, by ring⟩
     · field_simp [hy]
+      ring
     · field_simp [hy]
+      ring
 
 /-- Hence the exact CMP cotangent message is identical for targets 1 and 2. -/
 theorem scalarCMPMessage_one_eq_two :
