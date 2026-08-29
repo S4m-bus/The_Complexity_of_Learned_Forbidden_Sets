@@ -10,3 +10,4 @@ import CMPLean.AmbientTensor
 import CMPLean.ReLUDecisionTests
 import CMPLean.ZeroOrderAdversarial
 import CMPLean.MessageCompletenessAudit
+import CMPLean.CollapseLogic
