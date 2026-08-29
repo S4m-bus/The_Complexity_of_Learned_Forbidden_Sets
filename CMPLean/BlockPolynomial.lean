@@ -26,6 +26,6 @@ theorem cross_sample_pderiv_zero
     (hlocal : IsSampleLocalPolynomial i f)
     (hji : j ≠ i) :
     MvPolynomial.pderiv (Sum.inr (j, s) : NNVar Param Sample LocalState) f = 0 := by
-  exact MvPolynomial.pderiv_eq_zero_of_notMem_vars (hlocal j s hji)
+  exact MvPolynomial.pderiv_eq_zero_of_not_mem_vars (hlocal j s hji)
 
 end CMPLean
