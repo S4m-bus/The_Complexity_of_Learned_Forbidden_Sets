@@ -4,8 +4,12 @@ on:
   push:
     branches: [cmp-lean-verification]
   pull_request:
+    branches: [main]
     paths:
       - 'CMPLean/**'
+      - 'CMPLean.lean'
+      - 'lakefile.toml'
+      - 'lean-toolchain'
       - '.github/workflows/cmp-lean.yml'
 
 jobs:
@@ -13,21 +17,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install elan
-        run: |
-          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - name: Fetch Mathlib
-        working-directory: CMPLean
-        run: |
-          $HOME/.elan/bin/lake update
-          $HOME/.elan/bin/lake exe cache get
-      - name: Kernel build
-        working-directory: CMPLean
-        run: $HOME/.elan/bin/lake build
+      - uses: leanprover/lean-action@v1
+        with:
+          build: true
+          test: false
+          lint: false
+          use-mathlib-cache: true
+          leanchecker: true
       - name: Proof-hole audit
         run: |
-          if grep -R -n -E '\bsorry\b|\badmit\b|^axiom ' CMPLean/CMPLean; then
+          if grep -R -n -E '\bsorry\b|\badmit\b|^axiom ' CMPLean; then
             echo 'Proof hole or custom axiom detected.'
             exit 1
           fi
