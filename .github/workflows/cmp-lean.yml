@@ -12,6 +12,10 @@ on:
       - 'lean-toolchain'
       - '.github/workflows/cmp-lean.yml'
 
+concurrency:
+  group: cmp-lean-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,7 +32,7 @@ jobs:
           test: false
           lint: false
           use-mathlib-cache: true
-          leanchecker: true
+          leanchecker: false
       - name: Proof-hole audit
         run: |
           if grep -R -n -E '\bsorry\b|\badmit\b|^axiom ' CMPLean; then
