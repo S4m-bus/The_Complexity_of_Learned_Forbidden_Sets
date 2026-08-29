@@ -11,13 +11,13 @@ abbrev ToyVar := Fin 3
 Index 0 = θ, 1 = z, 2 = a.  The ReLU inequalities are handled semantically by
 `ExactReLU`; this polynomial family isolates the symbolic Jacobian information
 used by cotangent/Jacobian messages. -/
-def toyAffine (R : Type*) [CommRing R] : MvPolynomial ToyVar R :=
+noncomputable def toyAffine (R : Type*) [CommRing R] : MvPolynomial ToyVar R :=
   MvPolynomial.X 1 - MvPolynomial.X 0
 
-def toyTarget (y : ℝ) : MvPolynomial ToyVar ℝ :=
+noncomputable def toyTarget (y : ℝ) : MvPolynomial ToyVar ℝ :=
   MvPolynomial.X 2 - MvPolynomial.C y
 
-def toyReLUComplementarity : MvPolynomial ToyVar ℝ :=
+noncomputable def toyReLUComplementarity : MvPolynomial ToyVar ℝ :=
   MvPolynomial.X 2 * (MvPolynomial.X 2 - MvPolynomial.X 1)
 
 /-- Changing the target constant changes the exact feasibility problem but does
