@@ -4,6 +4,7 @@ import CMPLean.MessageSubmodule
 import CMPLean.ComplexityArithmetic
 import CMPLean.KahlerCore
 import CMPLean.DecisionProblem
+import CMPLean.ExactProjection
 import CMPLean.BlockPolynomial
 import CMPLean.AmbientTensor
 import CMPLean.ReLUDecisionTests
