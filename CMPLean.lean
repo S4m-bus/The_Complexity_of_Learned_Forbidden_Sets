@@ -6,3 +6,4 @@ import CMPLean.KahlerCore
 import CMPLean.DecisionProblem
 import CMPLean.BlockPolynomial
 import CMPLean.AmbientTensor
+import CMPLean.ReLUDecisionTests
