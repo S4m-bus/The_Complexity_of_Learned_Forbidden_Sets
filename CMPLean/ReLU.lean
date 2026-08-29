@@ -51,4 +51,27 @@ theorem exactReLU_inactive {z a : ℝ} (h : ExactReLU z a) (hz : z < 0) : a = 0 
 theorem exactReLU_boundary {a : ℝ} (h : ExactReLU 0 a) : a = 0 := by
   simpa [ExactReLU] using h
 
+/-- The full ReLU graph, including the switching boundary, can be represented
+using polynomial equalities with two existential square slack variables. -/
+theorem exactReLU_iff_polynomialized (z a : ℝ) :
+    ExactReLU z a ↔
+      ∃ u v : ℝ,
+        a = u ^ 2 ∧
+        a - z = v ^ 2 ∧
+        a * (a - z) = 0 := by
+  rw [exactReLU_iff_complementarity]
+  constructor
+  · rintro ⟨ha, haz, hprod⟩
+    refine ⟨Real.sqrt a, Real.sqrt (a - z), ?_, ?_, hprod⟩
+    · symm
+      exact Real.sq_sqrt ha
+    · symm
+      exact Real.sq_sqrt haz
+  · rintro ⟨u, v, hu, hv, hprod⟩
+    refine ⟨?_, ?_, hprod⟩
+    · rw [hu]
+      positivity
+    · rw [hv]
+      positivity
+
 end CMPLean
