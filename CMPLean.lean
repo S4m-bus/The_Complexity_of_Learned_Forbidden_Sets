@@ -8,3 +8,4 @@ import CMPLean.ExactProjection
 import CMPLean.BlockPolynomial
 import CMPLean.AmbientTensor
 import CMPLean.ReLUDecisionTests
+import CMPLean.ZeroOrderAdversarial
