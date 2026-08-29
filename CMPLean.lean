@@ -4,3 +4,5 @@ import CMPLean.MessageSubmodule
 import CMPLean.ComplexityArithmetic
 import CMPLean.KahlerCore
 import CMPLean.DecisionProblem
+import CMPLean.BlockPolynomial
+import CMPLean.AmbientTensor
