@@ -1,0 +1,47 @@
+\section{The conditional complexity collapse}
+\label{sec:collapse}
+
+The class-theoretic part of the proposed argument is short once its two
+substantive certificates exist.
+
+\begin{theorem}[Conditional \(P=\ExistsR\)]
+\label{thm:conditional-p-existsr}
+Assume:
+\begin{enumerate}
+  \item \(\ExactNNTP\in P\); and
+  \item \(\mathrm{ETR}\le_p\ExactNNTP\).
+\end{enumerate}
+Then \(P=\ExistsR\).
+\end{theorem}
+
+\begin{proof}
+The reduction and closure of \(P\) under polynomial-time many-one reductions
+imply \(\mathrm{ETR}\in P\), hence \(\ExistsR\subseteq P\).  The standard
+containment \(P\subseteq\ExistsR\) gives equality.
+\end{proof}
+
+\begin{corollary}[Conditional \(P=NP=\ExistsR\)]
+\label{cor:conditional-collapse}
+Under the hypotheses of \cref{thm:conditional-p-existsr},
+\begin{equation}
+  P=NP=\ExistsR.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Use \(P\subseteq NP\subseteq\ExistsR=P\).
+\end{proof}
+
+\begin{remark}[No unconditional collapse claim]
+The first hypothesis is not obtained from differential CMP because
+cotangent-only global exactness is false by
+\cref{thm:cotangent-only-false}.  The second hypothesis requires the
+model-matching construction of \cref{prob:etr-reduction}.  Consequently,
+\cref{thm:conditional-p-existsr,cor:conditional-collapse} are logical
+implications, not proofs that their hypotheses hold.
+\end{remark}
+
+The Lean development accompanying this paper formalizes an abstract version of
+these implications by packaging the two assumptions as a CMP decision
+certificate and an ETR bridge certificate.  It does not instantiate either
+certificate for the exact language.

@@ -1,0 +1,158 @@
+\section{Global exactness and decision completeness}
+\label{sec:global-exactness}
+
+An exact separator algorithm for \(\ExactNNTP\) needs messages with
+zeroth-order semantics.  If \(T_v\) is a rooted subtree, \(s\) its separator
+assignment, and \(x\) its internal variables, the required invariant is
+\begin{equation}
+  s\in\mathsf{Msg}_v
+  \quad\Longleftrightarrow\quad
+  \exists x\;F_{T_v}(x,s).
+  \label{eq:desired-semantic-invariant}
+\end{equation}
+Soundness is the left-to-right implication; completeness is the converse.  At
+the root, nonemptiness of the message must be equivalent to global feasibility.
+
+The semantic sets \(Q_i\) in \cref{eq:sample-projection} satisfy this invariant
+for leaf subtrees.  Their conjunction satisfies it for the dataset.  What is
+missing is a polynomially bounded representation and a polynomial-time
+projection/merge procedure.
+
+\subsection{A one-ReLU audit family}
+
+Fix a positive real target \(y\).  Consider one shared scalar parameter
+\(\theta\), local preactivation \(z\), and local activation \(a\), with
+constraints
+\begin{equation}
+  z-\theta=0,\qquad a=\ReLU(z),\qquad a-y=0.
+  \label{eq:toy-relu}
+\end{equation}
+
+\begin{lemma}[Exact projection of the audit family]
+\label{lem:toy-projection}
+For \(y>0\), the exact surviving parameter set of
+\cref{eq:toy-relu} is \(Q_y=\{y\}\).
+\end{lemma}
+
+\begin{proof}
+The affine equation gives \(z=\theta\) and the target equation gives \(a=y>0\).
+The ReLU equation then forces \(z=a=y\), so \(\theta=y\).  Conversely,
+\((\theta,z,a)=(y,y,y)\) satisfies every constraint.
+\end{proof}
+
+Use the complementarity polynomial for the ReLU equation and set
+\begin{equation}
+  f_1=z-\theta,\qquad
+  f_2=a(a-z),\qquad
+  f_3=a-y.
+\end{equation}
+At the satisfying point \(p_y=(\theta,z,a)=(y,y,y)\), their Jacobian rows in
+the column order \((\theta,z,a)\) are
+\begin{equation}
+  J_y=
+  \begin{bmatrix}
+    -1&1&0\\
+    0&-y&y\\
+    0&0&1
+  \end{bmatrix}.
+  \label{eq:toy-jacobian}
+\end{equation}
+For a row combination \((\lambda_1,\lambda_2,\lambda_3)\), eliminating the
+local \((z,a)\) columns imposes
+\begin{equation}
+  \lambda_1-y\lambda_2=0,qquad
+  y\lambda_2+\lambda_3=0.
+  \label{eq:toy-elimination}
+\end{equation}
+The surviving parameter coefficient is \(-\lambda_1\).
+
+\begin{theorem}[Scalar cotangent message loses the target]
+\label{thm:scalar-message-universal}
+For every \(y\ne0\), the message
+\begin{equation}
+  E_y:=\{-\lambda_1:\lambda_1-y\lambda_2=0,
+  \ y\lambda_2+\lambda_3=0\}
+\end{equation}
+equals \(\R\).
+\end{theorem}
+
+\begin{proof}
+Let \(s\in\R\).  Choose
+\(\lambda_1=-s\), \(\lambda_2=-s/y\), and \(\lambda_3=s\).  These choices
+satisfy \cref{eq:toy-elimination} and give \(-\lambda_1=s\).  Hence
+\(\R\subseteq E_y\), while the reverse inclusion is immediate.
+\end{proof}
+
+\begin{corollary}[No exact decoder from the scalar message alone]
+\label{cor:no-message-decoder}
+There is no function
+\begin{equation}
+  D:\{\text{subsets of }\R\}\times\R\to\{\mathsf{false},\mathsf{true}\}
+\end{equation}
+such that, for every \(y>0\) and \(\theta\in\R\),
+\begin{equation}
+  D(E_y,\theta)=\mathsf{true}
+  \quad\Longleftrightarrow\quad \theta\in Q_y.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+By \cref{thm:scalar-message-universal}, \(E_1=E_2=\R\).  By
+\cref{lem:toy-projection}, \(1\in Q_1\) and \(1\notin Q_2\).  Thus the same
+input pair \((\R,1)\) would have to receive both Boolean values.
+\end{proof}
+
+This counterexample occurs at \(y>0\), where the ReLU is on its active linear
+branch.  The failure is not caused by the switching boundary.
+
+\subsection{The symbolic version of the obstruction}
+
+Even before evaluation, formal differentiation erases the target constant:
+\begin{equation}
+  \frac{\partial}{\partial x_j}(a-y)
+  =\frac{\partial}{\partial x_j}(a-y')
+  \qquad\text{for every variable }x_j.
+\end{equation}
+Therefore the symbolic Jacobian row family of the audit architecture is
+independent of \(y\) in its target row.  Yet two positive-target samples sharing
+\(\theta\) are jointly feasible exactly when their targets agree.  In
+particular, targets \((1,1)\) form a yes-instance and targets \((1,2)\) form a
+no-instance with the same first-order target rows.
+
+\begin{theorem}[Cotangent-only global exactness is false]
+\label{thm:cotangent-only-false}
+The intrinsic first-order message
+\(J_{AS}(\kernel J_A)\), whether evaluated at the positive satisfying point or
+formed solely from the symbolic Jacobian rows, is not a complete invariant of
+exact parameter projection for all instances of \(\ExactNNTP\).
+\end{theorem}
+
+\begin{proof}
+The evaluated claim follows from \cref{cor:no-message-decoder}.  The symbolic
+claim follows because the family of derivatives of the target polynomial is
+independent of its constant, whereas exact feasibility in
+\cref{eq:toy-relu} depends on that constant.
+\end{proof}
+
+\subsection{What remains possible}
+
+\Cref{thm:cotangent-only-false} does not rule out every algorithm that uses the
+original equations together with cotangent summaries.  It proves that any
+correct algorithm must preserve additional zeroth-order information.  The
+tautologically complete message
+\begin{equation}
+  \mathsf{ZMsg}_v
+  :=\{s:\exists x_{\operatorname{int}(T_v)}F_{T_v}(x,s)\}
+  \label{eq:zeroth-order-message}
+\end{equation}
+satisfies \cref{eq:desired-semantic-invariant}.  Computing
+\cref{eq:zeroth-order-message} is existential projection, however, and general
+real quantifier elimination can create a much larger representation
+\cite{Collins1975,Renegar1992I,BasuPollackRoy2006}.
+
+The unresolved repair theorem is therefore precise: find a representation
+class containing every message in \cref{eq:zeroth-order-message} for the stated
+ReLU training systems, prove closure under leaf construction, conjunction, and
+projection, and bound both representation length and exact Turing running time
+by a polynomial in the original input length.  No such theorem is established
+by the present first-order framework.

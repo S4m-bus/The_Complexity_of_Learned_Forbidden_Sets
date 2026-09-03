@@ -1,0 +1,53 @@
+\section{K\"ahler exact sequences and base change}
+\label{app:kahler}
+
+For completeness, we record the universal-property maps used in
+\cref{thm:relative-differentials}.  Given \(A\)-algebras \(B,C\) and
+\(D=B\otimes_A C\), define
+\begin{equation}
+ \delta:D\to
+ (\Om_{B/A}\otimes_BD)\oplus(\Om_{C/A}\otimes_CD)
+\end{equation}
+on pure tensors by
+\begin{equation}
+ \delta(b\otimes c)=
+ (db\otimes(1\otimes c),\;dc\otimes(b\otimes1)).
+\end{equation}
+This is an \(A\)-derivation.  Conversely, restricting the universal derivation
+of \(D\) along \(B\to D\) and \(C\to D\) gives maps from the two summands to
+\(\Om_{D/A}\).  The maps are inverse because they agree with the universal
+derivations on pure tensors.
+
+Applied iteratively to \(D=\cR\), this yields
+\cref{eq:relative-differential-decomposition}.  The tensor factors on the
+right are essential: \(\Om_{\cR^{(i)}/A}\) is naturally a module over the local
+ring, while the direct sum must be compared as a module over the global ring.
+
+\subsection{Presentation for a quotient}
+
+If \(P=k[x_1,\ldots,x_n]\), \(I=(f_1,\ldots,f_m)\), and \(B=P/I\), the conormal
+sequence is
+\begin{equation}
+ I/I^2\longrightarrow
+ \Om_{P/k}\otimes_PB
+ \longrightarrow\Om_{B/k}\longrightarrow0.
+\end{equation}
+Under the basis \(dx_1,\ldots,dx_n\), the first map sends the class of \(f_i\)
+to
+\begin{equation}
+ df_i=\sum_j\frac{\partial f_i}{\partial x_j}dx_j.
+\end{equation}
+Choosing the displayed generators of \(I\) therefore gives the Jacobian
+presentation \cref{eq:jacobian-presentation}.  The presentation need not be
+minimal, and the first arrow need not be injective.
+
+\subsection{Evaluation}
+
+For a real point \(p:B\to\R\), tensoring with \(\R\) through \(p\) gives
+\begin{equation}
+ \R^m\xrightarrow{J_F(p)^{\mathsf T}}\R^n
+ \longrightarrow \Om_{B/k}\otimes_{B,p}\R\longrightarrow0.
+\end{equation}
+This operation retains the derivatives evaluated at \(p\) and discards
+polynomial coefficients that vanish under evaluation.  It cannot serve as a
+procedure for deciding whether any real point \(p\) exists.

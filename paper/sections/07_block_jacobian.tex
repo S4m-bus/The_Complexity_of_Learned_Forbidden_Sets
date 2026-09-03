@@ -1,0 +1,92 @@
+\section{Block-angular Jacobian structure}
+\label{sec:block-jacobian}
+
+Order the variables as
+\begin{equation}
+  (\theta,S^{(1)},\ldots,S^{(N)})
+\end{equation}
+and the polynomial equations sample by sample.  Write
+\begin{equation}
+  C_i=\frac{\partial F^{(i)}}{\partial\theta},
+  \qquad
+  D_i=\frac{\partial F^{(i)}}{\partial S^{(i)}}.
+\end{equation}
+
+\begin{lemma}[Cross-sample derivatives vanish]
+\label{lem:cross-derivatives}
+If \(i\ne j\), then
+\begin{equation}
+  \frac{\partial F^{(i)}}{\partial S^{(j)}}=0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By sample locality, no indeterminate in \(S^{(j)}\) occurs in any polynomial of
+\(F^{(i)}\).  A formal partial derivative with respect to an absent
+indeterminate is zero.
+\end{proof}
+
+\begin{theorem}[Block-angular presentation]
+\label{thm:block-jacobian}
+With the order above, the global Jacobian is
+\begin{equation}
+J_F=
+\begin{bmatrix}
+C_1&D_1&0&\cdots&0\\
+C_2&0&D_2&\cdots&0\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+C_N&0&0&\cdots&D_N
+\end{bmatrix}.
+\label{eq:block-jacobian}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The parameter block can be nonzero in every sample because parameters are
+shared.  The local diagonal blocks contain derivatives with respect to that
+sample's state.  Every off-diagonal local block is zero by
+\cref{lem:cross-derivatives}.
+\end{proof}
+
+The theorem holds over the polynomial quotient ring before evaluation and over
+\(\R\) after evaluation at any real point.  These are different coefficient
+structures.  Gaussian elimination is immediately available for a numerical
+matrix over a field.  Symbolic elimination over a multivariate quotient ring
+requires additional algebra and cannot be charged as ordinary field row
+reduction without justification.
+
+\subsection{Pointwise tangent compatibility}
+
+At a real solution \(p\), a first-order perturbation
+\((\delta\theta,\delta S^{(1)},\ldots,\delta S^{(N)})\) satisfies the
+linearized equations exactly when
+\begin{equation}
+  C_i(p)\delta\theta+D_i(p)\delta S^{(i)}=0
+  \qquad (i\in[N]).
+  \label{eq:linearized-local}
+\end{equation}
+Eliminating \(\delta S^{(i)}\) gives a constraint on
+\(\delta\theta\).  This is a tangent-extension question at a known point.  It
+does not ask whether a point \(p\) exists, and it does not recover the constant
+terms of the original equations.
+
+\begin{proposition}[Local linearized extension criterion]
+\label{prop:local-linear-extension}
+Over a field, let \(P_i^\perp\) have row space
+\(\kernel D_i(p)^{\mathsf T}\).  Then
+\cref{eq:linearized-local} has a solution \(\delta S^{(i)}\) if and only if
+\begin{equation}
+  P_i^\perp C_i(p)\delta\theta=0.
+  \label{eq:local-message-criterion}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The vector \(-C_i(p)\delta\theta\) belongs to the image of \(D_i(p)\) exactly
+when it is annihilated by every element of the left null space of \(D_i(p)\).
+Writing a basis of that null space as the rows of \(P_i^\perp\) gives
+\cref{eq:local-message-criterion}.
+\end{proof}
+
+Stacking the reduced constraints yields the root matrix used by differential
+CMP.  The criterion is exact for the linear system at \(p\).

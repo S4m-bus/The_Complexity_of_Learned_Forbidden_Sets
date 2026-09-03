@@ -1,0 +1,66 @@
+\section{Global CMP exactness audit}
+\label{app:cmp-exactness}
+
+This appendix spells out the logical incompatibility behind
+\cref{cor:no-message-decoder}.
+
+For positive \(y\), let
+\begin{equation}
+ \mathsf{One}(y,\theta)
+ :\Longleftrightarrow
+ \exists z,a:\ z=\theta\land a=\ReLU(z)\land a=y.
+\end{equation}
+Then
+\begin{equation}
+ \mathsf{One}(y,\theta)\quad\Longleftrightarrow\quad\theta=y.
+ \label{eq:one-relu-iff}
+\end{equation}
+Let \(E_y\) be the scalar message in
+\cref{thm:scalar-message-universal}.  Assume for contradiction that a decoder
+\(D\) satisfies
+\begin{equation}
+ D(E_y,\theta)\quad\Longleftrightarrow\quad\mathsf{One}(y,\theta)
+ \qquad(y>0).
+\end{equation}
+At \((y,\theta)=(1,1)\), the right side is true, so \(D(E_1,1)\) is true.  Since
+\(E_1=E_2=\R\), this implies \(D(E_2,1)\) is true.  But
+\cref{eq:one-relu-iff} makes \(\mathsf{One}(2,1)\) false, a contradiction.
+
+\subsection{Two-sample Boolean separation}
+
+Define
+\begin{equation}
+ \mathsf{Two}(y_1,y_2)
+ :\Longleftrightarrow
+ \exists\theta:\mathsf{One}(y_1,\theta)
+ \land\mathsf{One}(y_2,\theta).
+\end{equation}
+For positive targets,
+\begin{equation}
+ \mathsf{Two}(y_1,y_2)\quad\Longleftrightarrow\quad y_1=y_2.
+\end{equation}
+Thus \(\mathsf{Two}(1,1)\) is true and \(\mathsf{Two}(1,2)\) is false.  The
+formal derivative of the target equation \(a-y\) is the same for both target
+values.  A message construction that depends only on those derivatives cannot
+distinguish the Boolean answers.
+
+\subsection{Scope of the impossibility theorem}
+
+The theorem rules out a decoder whose only semantic summary of an eliminated
+subproblem is the cotangent message subspace.  It does not rule out carrying
+the original target constants, nonlinear equations, sign data, elimination
+ideals, or complete semialgebraic projections.  Each enrichment must be
+analyzed for semantic sufficiency and polynomial representation size.
+
+\subsection{Lean correspondence}
+
+The formal development contains:
+\begin{itemize}
+  \item \texttt{scalarCMPMessage\_eq\_univ};
+  \item \texttt{scalarCMPMessage\_one\_eq\_two};
+  \item \texttt{exact\_projection\_one\_diff\_two};
+  \item \texttt{no\_exact\_decoder\_from\_scalarCMPMessage\_alone}; and
+  \item \texttt{first\_order\_data\_not\_complete\_for\_exact\_relu\_decision}.
+\end{itemize}
+These theorems formalize the exact in-scope obstruction rather than a generic
+counterexample about unrelated varieties.

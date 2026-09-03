@@ -1,0 +1,112 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Exact feasibility questions for neural networks sit at the intersection of
+real algebraic geometry, computational complexity, and formal verification.
+Once approximation and numerical optimization are removed, a finite
+feed-forward ReLU network with unknown real weights and rational data defines a
+finite system of polynomial equalities and inequalities.  The natural decision
+question is whether that system has a real solution.  Closely related neural
+network training problems are known to be complete for the complexity class
+\(\ExistsR\)~\cite{AbrahamsenKleistMiltzow2021}; this class contains NP and is
+contained in PSPACE~\cite{Canny1988,SchaeferCardinalMiltzow2024}.
+
+This paper investigates whether the repeated-sample structure of exact neural
+training admits an exact separator algorithm.  A single parameter vector
+\(\theta\) is shared across the dataset, while each sample has its own
+preactivations, activations, and auxiliary variables.  At the level of
+polynomial equations this yields a block-angular Jacobian.  At the level of
+commutative algebra it yields an iterated tensor product over the shared
+parameter algebra.  These facts motivate \emph{Cotangent Message Passing}
+(CMP): eliminate a local block from the row space of a linearized constraint
+system and retain only the induced subspace on a separator.
+
+The distinction between a linearized relation and an exact existential
+projection is decisive.  The cotangent module records first-order behavior.
+The decision problem asks whether the semialgebraic set is empty.  Neither the
+universal property of K\"ahler differentials nor a pointwise Jacobian identity
+identifies these two objects.  A proof of an exact CMP decider therefore needs
+an additional semantic invariant:
+\begin{equation}
+  s\in \mathsf{Msg}_v
+  \quad\Longleftrightarrow\quad
+  \exists x_{\operatorname{int}(T_v)}\;
+  F_{T_v}(x,s).
+  \label{eq:semantic-message-intro}
+\end{equation}
+It must also prove that the representation of \(\mathsf{Msg}_v\), its merge
+operation, and its projection operation remain polynomially bounded.
+
+\subsection{Contributions}
+
+The present draft makes the following claims, each with an explicit proof
+status.
+
+\begin{enumerate}
+  \item We define \(\ExactNNTP\) as a Boolean feasibility language with
+  rational input and unrestricted real witnesses.  ``Training'' describes the
+  origin of the constraints; the output is a Boolean, not a weight vector.
+
+  \item We prove an exact complementarity description of a ReLU gate and its
+  existential square-slack polynomialization.  The description includes the
+  switching point \(z=a=0\).
+
+  \item We derive the shared-base tensor-product description of the equality
+  coordinate ring and the direct-sum decomposition of relative K\"ahler
+  differentials after base change.  We then display the induced block-angular
+  Jacobian.
+
+  \item We define the intrinsic first-order CMP message
+  \(
+    \cE(A\mathbin{\to}S)=J_{AS}(\kernel J_A)
+  \)
+  and prove exact separator factorization for the associated linear row-space
+  problem.  This theorem is independent of a null-space basis.
+
+  \item We prove that the first-order message is not a complete invariant of
+  exact ReLU feasibility.  A one-ReLU family with positive target \(y\) has
+  exact parameter projection \(\{y\}\), but its evaluated scalar CMP message
+  equals \(\R\) for every \(y>0\).  Thus targets one and two yield identical
+  messages and different exact feasibility at \(\theta=1\).
+
+  \item We isolate the remaining obligations for the proposed complexity
+  collapse: a polynomially represented zeroth-order message, a correct global
+  decider, polynomial Turing-model bit complexity, and a reduction landing in
+  the exact language defined here.  We formalize the final class-theoretic
+  implication conditionally.
+\end{enumerate}
+
+\subsection{Status of the proposed collapse}
+
+The intended implication has the form
+\begin{equation}
+  \ExistsR \leq_p \ExactNNTP \in P
+  \quad\Longrightarrow\quad
+  P=NP=\ExistsR.
+  \label{eq:collapse-chain}
+\end{equation}
+The implication in \cref{eq:collapse-chain} is standard.  The right-hand
+premise is not supplied by the first-order CMP theorem.  Indeed,
+\cref{sec:global-exactness} disproves the required completeness statement for
+a decoder that receives only the existing cotangent message subspace.  The
+collapse is therefore recorded as a target conditional theorem, not as an
+unconditional result.
+
+This separation is more than a matter of exposition.  The counterexample is
+inside the stated problem class, uses a single ReLU, and occurs at a positive
+satisfying point.  It cannot be repaired by excluding ReLU switching
+singularities.  Any successful exact message must preserve zeroth-order target
+constants and global component information that differentiation can erase.
+
+\subsection{Organization}
+
+\Cref{sec:preliminaries,sec:problem,sec:relu} define the computational and
+algebraic setting.  \Cref{sec:coordinate-ring,sec:kahler,sec:block-jacobian}
+establish the shared-base structure.  \Cref{sec:topology,sec:cmp} develop the
+separator decomposition and the proved linear CMP theorem.
+\Cref{sec:global-exactness} gives the semantic projection invariant and the
+counterexample to cotangent-only completeness.  The algorithmic and complexity
+consequences are audited in \cref{sec:algorithm,sec:complexity}.
+\Cref{sec:etr-reduction,sec:collapse} state the exact reduction and collapse
+obligations.  Boundary behavior, related work, and possible repair directions
+appear in the remaining sections.

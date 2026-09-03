@@ -1,0 +1,104 @@
+\section{The exact ReLU NNTP decision problem}
+\label{sec:problem}
+
+We define a finite Boolean language.  The definition is deliberately separated
+from any optimization method.
+
+\begin{definition}[Network architecture]
+A feed-forward ReLU architecture is a finite directed acyclic graph with input,
+affine, ReLU, and output nodes.  An affine node computes a rational affine
+combination of earlier activations in which a designated subset of coefficients
+are coordinates of a shared parameter vector \(\theta\in\R^P\).  Products of
+an unknown weight and a sample-local activation are polynomial terms.  A ReLU
+node maps a preactivation \(z\) to \(a=\max\{0,z\}\).
+\end{definition}
+
+For each sample \(i\in[N]\), write \(S^{(i)}\in\R^{K_i}\) for every
+sample-local preactivation, activation, output, and auxiliary slack variable.
+The parameters \(\theta\) are not copied by sample.  Rational inputs and
+targets are substituted as constants.
+
+\begin{definition}[Exact-ReLU-NNTP instance]
+An instance \(I\) consists of:
+\begin{enumerate}
+  \item a finite feed-forward architecture and a designation of trainable
+  parameters;
+  \item a finite rational dataset \((x_i,y_i)_{i=1}^N\);
+  \item exact affine-transition constraints, exact ReLU constraints, and exact
+  output-target equalities for every sample; and
+  \item a binary encoding of all rational coefficients and incidence data.
+\end{enumerate}
+Its feasibility predicate is
+\begin{equation}
+  \Feas(I);:\Longleftrightarrow\;
+  \exists\theta\in\R^P\;
+  \exists S^{(1)}\in\R^{K_1}\cdots
+  \exists S^{(N)}\in\R^{K_N}:
+  \bigwedge_{i=1}^N\Phi_i(\theta,S^{(i)}).
+  \label{eq:exact-feasibility}
+\end{equation}
+\end{definition}
+
+\begin{definition}[\(\ExactNNTP\)]
+Given the binary encoding of \(I\), return \textnormal{\textsc{yes}} if and only if
+\(\Feas(I)\) holds.
+\end{definition}
+
+No witness is required as output.  The definition does not mention a loss
+surface, gradient descent, a local optimum, or numerical tolerance.  Exact
+target equality is used in this draft; a threshold-loss variant is a different
+formal language unless a model-matching reduction is supplied.
+
+\subsection{Input size and uniformity}
+
+Let \(L\) be the maximum coefficient bit length, and let \(n=|\langle
+I\rangle|\) be the total binary encoding length.  The encoding explicitly
+lists the architecture, trainable parameter incidences, samples, and rational
+constants.  Consequently
+\begin{equation}
+  N\le n,\qquad P\le n,\qquad K_i\le n
+  \label{eq:dimension-input-bounds}
+\end{equation}
+for any reasonable noncompressed encoding.  These inequalities do not by
+themselves prove that an algebraic algorithm runs in polynomial time: the size
+of intermediate polynomials, formulas, or algebraic numbers must also be
+controlled.
+
+\subsection{Sample locality}
+
+The constraint family has the syntactic form
+\begin{equation}
+  \Phi_I(\theta,S^{(1)},\ldots,S^{(N)})
+  =\bigwedge_{i=1}^{N}\Phi_i(\theta,S^{(i)}).
+  \label{eq:sample-local-form}
+\end{equation}
+Thus distinct samples share \(\theta\) and no sample-local variable.  This
+property drives both the tensor decomposition and the star-shaped dependency
+graph below.
+
+\begin{proposition}[Semantic parameter projection]
+\label{prop:semantic-projection}
+For each sample define
+\begin{equation}
+  Q_i:=\{\theta\in\R^P:\exists S^{(i)}\;Phi_i(\theta,S^{(i)})\}.
+  \label{eq:sample-projection}
+\end{equation}
+Then
+\begin{equation}
+  \Feas(I)\quad\Longleftrightarrow\quad
+  \bigcap_{i=1}^{N}Q_i\ne\varnothing.
+  \label{eq:projection-intersection}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+If a common assignment \(\theta\) and local witnesses satisfy
+\cref{eq:exact-feasibility}, then \(\theta\in Q_i\) for every \(i\).  Conversely,
+if \(\theta\in\bigcap_iQ_i\), choose a local witness for each of the finitely
+many samples.  These witnesses share no local variables and therefore combine
+with \(\theta\) into a global witness.
+\end{proof}
+
+\Cref{prop:semantic-projection} is an exact zeroth-order separator theorem.  It
+does not give an efficient representation of the sets \(Q_i\) or an efficient
+method for testing their intersection.

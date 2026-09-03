@@ -1,0 +1,48 @@
+\section{Complexity ledger}
+\label{app:complexity}
+
+Let a dense local matrix have \(O(k)\) rows and columns.  Conventional Gaussian
+elimination uses \(O(k^3)\) arithmetic operations and \(O(k^2)\) stored field
+elements.  Matrix multiplication and rank reduction have the same classical
+cubic upper bound.  Over \(N\) sample bags this yields
+\(O(Nk^3)\) operations and, when streamed, \(O(k^2)\) working field elements.
+
+For \(k=P+K\) and \(N,P,K\le n\), monotonicity gives
+\begin{align}
+ N(P+K)^3
+ &\le n(n+n)^3\\
+ &=n(2n)^3\\
+ &=8n^4.
+\end{align}
+This inequality has been machine-checked in the Lean development.
+
+\subsection{Conditional rational-matrix bit bound}
+
+Suppose an \(r\times c\) matrix with rational entries of bit length at most
+\(L\) is explicitly given.  Clearing denominators produces an integer matrix
+with polynomially related bit length.  Fraction-free elimination represents
+intermediate entries through minors; determinant bounds then give polynomial
+bit lengths in \(r,c,L\).  This supports a polynomial Turing bound for the
+linear-algebra phase~\cite{Bareiss1968}.
+
+The premises are not automatically satisfied by symbolic CMP:
+\begin{itemize}
+  \item a satisfying point is not given;
+  \item its coordinates need not be rational;
+  \item symbolic entries lie in a polynomial or quotient ring; and
+  \item the zeroth-order message may contain several semialgebraic components.
+\end{itemize}
+
+\subsection{Checklist for a future bit theorem}
+
+A complete proof of \cref{eq:desired-bit-bound} must state:
+\begin{enumerate}
+  \item a canonical binary encoding for every message;
+  \item polynomial bounds on message length after every merge and projection;
+  \item exact algorithms for equality, sign, and emptiness in that encoding;
+  \item coefficient-height bounds under every operation;
+  \item the number of operations along the tree; and
+  \item the cost of the root acceptance test.
+\end{enumerate}
+Without these items, an \(O(n^4)\) count of abstract ring or field operations is
+not a proof of membership in \(P\).

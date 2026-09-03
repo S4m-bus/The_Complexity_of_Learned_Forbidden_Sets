@@ -1,0 +1,43 @@
+\section{Lean 4 verification notes}
+\label{app:lean}
+
+The accompanying Lean 4 development is on the isolated repository branch
+\texttt{cmp-lean-verification}.  This manuscript was initialized from commit
+\texttt{fcca060331defca7226db3e0aecc8bc3c93fcbdf}.  GitHub Actions run 74 for
+that commit completed successfully.  The workflow runs \texttt{lake build} and
+then rejects occurrences of \texttt{sorry}, \texttt{admit}, or a line beginning
+with \texttt{axiom} in the \texttt{CMPLean} directory.
+
+\begin{center}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.31\linewidth}p{0.58\linewidth}}
+\toprule
+Lean file & Verified content used by this manuscript\\
+\midrule
+\texttt{ReLU.lean} & Complementarity, square-slack polynomialization, and active/inactive/boundary cases.\\
+\texttt{DecisionProblem.lean} & Abstract Boolean existential feasibility semantics with shared parameters.\\
+\texttt{ExactProjection.lean} & Feasibility iff existence in the shared-parameter projection.\\
+\texttt{KahlerCore.lean} & Transitivity exactness and relative-map surjectivity from Mathlib.\\
+\texttt{BlockPolynomial.lean} & Cross-sample formal partial derivatives vanish.\\
+\texttt{AmbientTensor.lean} & Ambient shared-base polynomial tensor equivalence.\\
+\texttt{Separator.lean} & Basis-free linear separator factorization.\\
+\texttt{MessageSubmodule.lean} & Message as image of a kernel and separator-dimension bound.\\
+\texttt{ComplexityArithmetic.lean} & The inequality \(N(P+K)^3\le8n^4\) under dimension bounds.\\
+\texttt{ReLUDecisionTests.lean} & One- and two-sample positive-target feasibility.\\
+\texttt{MessageCompleteness}\newline\texttt{Audit.lean} & Identical scalar CMP messages with different exact projections; no message-only decoder.\\
+\texttt{ZeroOrderAdversarial.lean} & Target constants vanish from first derivatives while Boolean feasibility changes.\\
+\texttt{CollapseLogic.lean} & Conditional class-collapse logic from abstract decision and reduction certificates.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The formalization does not construct the CMP decision certificate or the ETR
+bridge certificate.  In particular, the theorem named
+\texttt{P\_eq\_NP\_eq\_ExistsR} accepts those certificates as hypotheses.  Its
+successful compilation verifies the final logical implication, not the missing
+global exactness or reduction premises.
+
+The current formal audit is unusually informative because it includes a
+negative theorem internal to the exact ReLU scope.  Any repaired CMP definition
+should first be instantiated on the one-ReLU and incompatible-target tests
+before a new global certificate is attempted.

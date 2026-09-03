@@ -1,0 +1,77 @@
+\documentclass[11pt]{article}
+
+\input{macros}
+
+\title{Cotangent Message Passing for Exact ReLU Feasibility\\
+and the Existential Theory of the Reals}
+\author{Muhammad Samuel Qudus}
+\date{Draft v0.1 -- September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study a decision formulation of exact training for finite feed-forward
+rectified-linear-unit (ReLU) networks.  The trainable parameters are shared
+across all samples, whereas preactivations, activations, and slack variables
+are sample-local.  This induces a block-angular polynomial system and an
+iterated tensor-product description of its coordinate ring over the shared
+parameter algebra.  We establish the corresponding decomposition of relative
+K\"ahler differentials, formulate an intrinsic cotangent separator message as
+the image of the kernel of an internal Jacobian block, and prove its exact
+factorization property for the associated linearized system.  These results
+hold without selecting an activation pattern; the exact ReLU graph, including
+its switching boundary, is represented by polynomial equalities with
+existential square slacks.
+
+The central question is whether these cotangent messages decide the original
+zeroth-order feasibility problem.  We give an in-scope one-ReLU counterexample:
+for every positive target, the evaluated scalar cotangent message is the full
+separator space, even though the exact surviving parameter set is the
+singleton containing that target.  Hence no decoder whose only semantic input
+is the first-order message subspace can decide all exact ReLU instances.  This
+separates the proved linear separator theorem from the global nonlinear
+decision invariant required for a polynomial-time algorithm.  We record the
+precise additional obligations---a complete zeroth-order message, a
+polynomial-size representation theorem, a Turing-model bit bound, and a
+model-matching reduction from the existential theory of the reals.  We also
+state the resulting class collapse conditionally.  In particular, this draft
+does not claim an unconditional proof that
+\(P=\exists\mathbb{R}\) or \(P=NP\).
+\end{abstract}
+
+\tableofcontents
+
+\input{sections/01_introduction}
+\input{sections/02_preliminaries}
+\input{sections/03_problem_definition}
+\input{sections/04_relu_encoding}
+\input{sections/05_coordinate_ring}
+\input{sections/06_kahler}
+\input{sections/07_block_jacobian}
+\input{sections/08_dependency_topology}
+\input{sections/09_cmp}
+\input{sections/10_global_exactness}
+\input{sections/11_algorithm}
+\input{sections/12_complexity}
+\input{sections/13_etr_reduction}
+\input{sections/14_collapse}
+\input{sections/15_boundary_cases}
+\input{sections/16_related_work}
+\input{sections/17_discussion}
+\input{sections/18_conclusion}
+
+\appendix
+\input{appendices/appendix_relu}
+\input{appendices/appendix_tensor}
+\input{appendices/appendix_kahler}
+\input{appendices/appendix_separator}
+\input{appendices/appendix_cmp_exactness}
+\input{appendices/appendix_complexity}
+\input{appendices/appendix_etr}
+\input{appendices/appendix_lean}
+
+\bibliographystyle{alpha}
+\bibliography{references}
+
+\end{document}

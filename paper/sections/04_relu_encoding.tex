@@ -1,0 +1,93 @@
+\section{Exact algebraic and semialgebraic ReLU encoding}
+\label{sec:relu}
+
+The graph of a ReLU is basic semialgebraic and has a particularly small
+complementarity description.
+
+\begin{lemma}[Exact ReLU complementarity]
+\label{lem:relu-complementarity}
+For \(z,a\in\R\),
+\begin{equation}
+  a=\ReLU(z)
+  \quad\Longleftrightarrow\quad
+  a\ge0,\quad a-z\ge0,\quad a(a-z)=0.
+  \label{eq:relu-complementarity}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Suppose first that \(a=\max\{0,z\}\).  If \(z\le0\), then \(a=0\), so
+\(a\ge0\), \(a-z=-z\ge0\), and the product vanishes.  If \(z\ge0\), then
+\(a=z\), so both weak inequalities hold and \(a-z=0\).
+
+Conversely, the product equation implies either \(a=0\) or \(a-z=0\).  In the
+first case, \(a-z\ge0\) implies \(z\le0\), whence
+\(a=0=\max\{0,z\}\).  In the second case, \(a=z\) and \(a\ge0\), whence
+\(a=z=\max\{0,z\}\).
+\end{proof}
+
+The three regimes are all present:
+\begin{align}
+  z<0 &\Longrightarrow a=0,\\
+  z=0 &\Longrightarrow a=0,\\
+  z>0 &\Longrightarrow a=z.
+\end{align}
+No disequality \(z\ne0\) is introduced.
+
+\begin{lemma}[Equality-only polynomialization]
+\label{lem:relu-polynomialization}
+For \(z,a\in\R\),
+\begin{equation}
+ a=\ReLU(z)
+ \quad\Longleftrightarrow\quad
+ \exists u,v\in\R:
+ a=u^2,\quad a-z=v^2,\quad a(a-z)=0.
+ \label{eq:relu-polynomialization}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By \cref{lem:relu-complementarity}, a ReLU assignment makes \(a\) and \(a-z\)
+nonnegative.  Each is therefore a square in \(\R\).  Conversely, the two square
+equalities imply the weak inequalities, and the complementarity equation then
+allows an application of \cref{lem:relu-complementarity}.
+\end{proof}
+
+\begin{remark}[Projection is part of the semantics]
+The equality variety in variables \((z,a,u,v)\) is not literally the graph in
+the \((z,a)\)-plane.  Its projection to \((z,a)\) is the graph.  The slack
+variables therefore belong to the existential local state.
+\end{remark}
+
+\begin{proposition}[Membership in \(\ExistsR\)]
+\label{prop:nntp-in-existsr}
+The language \(\ExactNNTP\) belongs to \(\ExistsR\).
+\end{proposition}
+
+\begin{proof}
+Introduce real variables for the shared parameters, every sample-local
+preactivation and activation, and the two square slacks of each ReLU.  Affine
+transitions with trainable weights are polynomial equalities of degree at most
+two in the unknowns.  Exact targets are polynomial equalities.  Replace every
+ReLU by \cref{eq:relu-polynomialization}.  The number of variables and
+constraints and the coefficient encoding length grow polynomially with the
+explicit instance encoding.  The resulting existential conjunction of
+polynomial equalities is true exactly when the instance is feasible.
+\end{proof}
+
+\subsection{The switching boundary and singularity}
+
+The complementarity polynomial
+\begin{equation}
+  g(z,a)=a(a-z)
+\end{equation}
+has gradient
+\begin{equation}
+  \nabla g(z,a)=(-a,,2a-z).
+\end{equation}
+At \((z,a)=(0,0)\), this gradient vanishes.  Thus a Jacobian-based regularity
+argument cannot cover the switching point merely because the global K\"ahler
+module exists there.  K\"ahler differentials are defined at singular points,
+but their fibers can change rank and acquire information not present on a
+smooth stratum.  The exact semantics above remains valid at the boundary; only
+the first-order regularity changes.

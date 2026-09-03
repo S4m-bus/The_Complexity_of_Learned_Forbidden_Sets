@@ -1,0 +1,95 @@
+\section{K\"ahler differential structure}
+\label{sec:kahler}
+
+The shared-base tensor product has a corresponding decomposition of relative
+differentials.
+
+\begin{theorem}[Relative differential decomposition]
+\label{thm:relative-differentials}
+Let \(\cR\) be the iterated tensor product in
+\cref{eq:quotient-tensor}.  There is a canonical \(\cR\)-module isomorphism
+\begin{equation}
+  \boxed{
+  \Om_{\cR/A}\cong
+  \bigoplus_{i=1}^{N}
+  \left(
+    \Om_{\cR^{(i)}/A}
+    \otimes_{\cR^{(i)}}\cR
+  \right).}
+  \label{eq:relative-differential-decomposition}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For two \(A\)-algebras \(B,C\), an \(A\)-derivation from \(B\otimes_A C\) to a
+\((B\otimes_A C)\)-module \(M\) is uniquely determined by its restrictions to
+\(B\) and \(C\).  Conversely, two such derivations define
+\(d(b\otimes c)=c\,d_B(b)+b\,d_C(c)\).  The universal property of K\"ahler
+differentials therefore gives
+\begin{equation}
+ \Om_{(B\otimes_A C)/A}
+ \cong
+ (\Om_{B/A}\otimes_B(B\otimes_A C))
+ \oplus
+ (\Om_{C/A}\otimes_C(B\otimes_A C)).
+\end{equation}
+Iterating this isomorphism and applying \cref{thm:quotient-tensor} proves the
+claim.
+\end{proof}
+
+This theorem is global and requires no smoothness hypothesis.  Its meaning is
+relative: after the shared parameter algebra is held fixed, different samples
+have independent differential generators and relations.
+
+\begin{proposition}[Absolute-to-relative transitivity]
+\label{prop:transitivity}
+For \(k\to A\to\cR\), there is a right-exact sequence
+\begin{equation}
+  \cR\otimes_A\Om_{A/k}
+  \longrightarrow\Om_{\cR/k}
+  \longrightarrow\Om_{\cR/A}
+  \longrightarrow0.
+  \label{eq:global-transitivity}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+This is the standard Jacobi--Zariski transitivity sequence for K\"ahler
+differentials~\cite{StacksDifferentials}.  The first map sends a parameter
+differential from \(A\) to its image in the global algebra; the second quotient
+forgets parameter motion.
+\end{proof}
+
+The first term in \cref{eq:global-transitivity} is precisely the channel through
+which sample-relative pieces couple in the absolute module.  Right exactness
+does not assert that the first map is injective, nor that the sequence splits.
+
+\subsection{Jacobian presentation}
+
+Choose polynomial equality generators
+\(F=(F_1,\ldots,F_m)\) for \(I\) in variables
+\(x=(\theta,S^{(1)},\ldots,S^{(N)})\).  Then
+\begin{equation}
+  \cR^m\xrightarrow{J_F^{\mathsf T}}\cR^{P+\sum_iK_i}
+  \longrightarrow\Om_{\cR/k}\longrightarrow0.
+  \label{eq:global-jacobian-presentation}
+\end{equation}
+The image of \(J_F^{\mathsf T}\) records differential relations
+\(dF_j=0\).  Different generating families can give different presentation
+matrices while presenting isomorphic modules.
+
+\begin{remark}[Global module versus fiber]
+For a real solution \(p\), tensoring
+\cref{eq:global-jacobian-presentation} with the residue field at \(p\) evaluates
+all coefficients.  The resulting vector-space cokernel describes a cotangent
+fiber.  Equality of such fibers, or equality of their row spaces, need not
+imply equality of the original ideals or equality of their real projections.
+\end{remark}
+
+\begin{remark}[Singular points]
+The module \(\Om_{\cR/k}\) and the exact sequence
+\cref{eq:global-transitivity} exist at singular points.  What fails there is a
+naive identification of module rank with the dimension of a smooth manifold.
+Our algebraic decompositions remain valid; claims based on constant-rank
+linear algebra require separate hypotheses.
+\end{remark}

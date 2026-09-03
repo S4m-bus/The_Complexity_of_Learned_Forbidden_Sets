@@ -1,0 +1,93 @@
+\section{CMP decision algorithms: proved and required forms}
+\label{sec:algorithm}
+
+Two procedures must be distinguished.  The first is an exact algorithm for an
+evaluated linearized system.  The second is the desired but currently
+unconstructed exact feasibility decider.
+
+\subsection{Differential CMP}
+
+Given numerical Jacobian blocks at a specified point \(p\), differential CMP
+performs the following operations.
+
+\begin{enumerate}
+  \item For each sample, form \(C_i(p)\) and \(D_i(p)\).
+  \item Compute a basis \(P_i^\perp\) for
+  \(\kernel D_i(p)^{\mathsf T}\).
+  \item Form the local parameter message
+  \begin{equation}
+    M_i=P_i^\perp C_i(p).
+  \end{equation}
+  \item Stack the messages and remove linearly dependent rows.
+  \item Accept a proposed parameter direction \(\delta\theta\) if and only if
+  the root matrix annihilates \(\delta\theta\).
+\end{enumerate}
+
+\begin{theorem}[Correctness of differential CMP]
+\label{thm:differential-cmp-correct}
+At a specified real point \(p\), the root test accepts
+\(\delta\theta\) if and only if there exist local directions
+\(\delta S^{(i)}\) satisfying all linearized equations
+\begin{equation}
+  C_i(p)\delta\theta+D_i(p)\delta S^{(i)}=0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Apply \cref{prop:local-linear-extension} independently to every sample and
+conjoin the resulting conditions.  Equivalently, recursively apply
+\cref{thm:linear-separator-factorization} along the star decomposition.
+\end{proof}
+
+This procedure assumes the point \(p\) is already supplied.  It neither tests
+whether \(p\) exists nor decides the original instance.
+
+\subsection{The required exact procedure}
+
+An exact decision algorithm would need a finite message representation
+\(R_v\) for every subtree with a denotation
+\(\denote{R_v}\subseteq\R^{S_v}\).  Its operations must satisfy:
+
+\begin{description}[leftmargin=3.4cm,style=nextline]
+  \item[Leaf construction]
+  \(\denote{R_v}\) is exactly the projection of the leaf's ReLU
+  constraints to its separator.
+
+  \item[Merge]
+  Combining child representations denotes the intersection of their lifted
+  feasible sets with the current bag constraints.
+
+  \item[Contraction]
+  Eliminating internal variables denotes existential projection, with both
+  soundness and completeness.
+
+  \item[Root test]
+  The algorithm returns \textsc{yes} exactly when the root denotation is
+  nonempty.
+
+  \item[Complexity]
+  Representation length and the time for every operation are polynomial in
+  the original binary input length.
+\end{description}
+
+If arbitrary quantifier-free formulas over the reals are used as
+representations, the first four requirements follow from standard logical
+semantics.  The fifth does not follow.  If only the cotangent subspaces of
+\cref{def:intrinsic-message} are used, the fifth is inexpensive but the first
+and third fail by \cref{thm:cotangent-only-false}.
+
+\begin{problem}[Polynomial semantic message]
+\label{prob:polynomial-semantic-message}
+Construct a representation and algorithms satisfying all five requirements
+for every finite instance of \(\ExactNNTP\), or prove that no such
+representation exists under an explicitly stated computational model.
+\end{problem}
+
+\subsection{No hidden root oracle}
+
+The root test must be included in the complexity analysis.  A procedure that
+propagates compact differential messages and then invokes an unrestricted
+semialgebraic feasibility solver at the root has not placed the language in
+\(P\); it has moved the original difficulty into the final operation.  The
+same applies if a ``message entry'' is an unevaluated existential formula whose
+nonemptiness remains ETR-hard.

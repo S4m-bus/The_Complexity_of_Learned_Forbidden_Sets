@@ -1,0 +1,77 @@
+\section{The ETR bridge}
+\label{sec:etr-reduction}
+
+To obtain \(\ExistsR\)-hardness, a reduction must begin with an explicitly
+encoded ETR sentence
+\begin{equation}
+  \varphi=\exists x_1,\ldots,x_m:\Psi(x_1,\ldots,x_m)
+\end{equation}
+and construct in polynomial time an instance \(I_\varphi\) of the exact
+language in \cref{sec:problem} such that
+\begin{equation}
+  \varphi\text{ is true}
+  \quad\Longleftrightarrow\quad
+  \Feas(I_\varphi).
+  \label{eq:etr-reduction-spec}
+\end{equation}
+
+Related neural-network training languages are known to be
+\(\ExistsR\)-complete~\cite{AbrahamsenKleistMiltzow2021}.  A citation to that
+result does not by itself prove \cref{eq:etr-reduction-spec}: the architecture,
+activation function, loss/threshold convention, permitted trainable
+parameters, and exact acceptance predicate must match, or a polynomial
+model-conversion reduction must be given.
+
+\subsection{Required gadget ledger}
+
+The reduction must provide the following constructions with forward and
+reverse correctness proofs.
+
+\begin{center}
+\begin{tabular}{p{0.22\linewidth}p{0.50\linewidth}p{0.14\linewidth}}
+\toprule
+Object & Required invariant & Status\\
+\midrule
+Rational constant & A designated signal/parameter equals the encoded rational. & Open\\
+Signed variable & An unrestricted real variable is represented despite nonnegative ReLU outputs. & Open\\
+Equality & Two represented expressions are equal iff the exact output constraints hold. & Open\\
+Addition & A represented output equals the sum of represented inputs. & Open\\
+Multiplication & A represented output equals the product of two represented unknowns, with legal sharing in the network model. & Open\\
+Weak/strict sign & The source sign predicate is preserved using only permitted exact constraints. & Open\\
+Conjunction & All source constraints hold simultaneously under one shared assignment. & Open\\
+Reuse & Multiple occurrences of one source variable denote one real value without exponential copying. & Open\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Unknown weights multiply activations in an affine layer, so the network
+equations contain bilinear terms.  Turning that observation into a multiplication
+gadget requires more than noting the term's existence: both operands must be
+represented as source variables, their signs must be handled, and all uses
+must remain synchronized by the permitted parameter-sharing rules.
+
+\subsection{Size and bit bounds}
+
+For a valid many-one reduction, the construction must satisfy
+\begin{equation}
+  |\langle I_\varphi\rangle|
+  \le \poly(|\langle\varphi\rangle|).
+\end{equation}
+This includes the number of nodes, samples, trainable incidences, local state
+variables, and the bit lengths of rational constants.  Correctness must be
+proved in both directions; a gadget that introduces unintended ReLU branches
+is insufficient.
+
+\begin{problem}[Model-matching ETR reduction]
+\label{prob:etr-reduction}
+Prove \cref{eq:etr-reduction-spec} for the exact target-equality language of
+\cref{sec:problem}, with polynomial construction size and coefficient bit
+length, or modify the language and every upstream theorem in a stated,
+consistent manner.
+\end{problem}
+
+\begin{remark}[Current status]
+Membership in \(\ExistsR\) is proved in \cref{prop:nntp-in-existsr}.  Hardness
+for this exact formal language remains \openstatus until
+\cref{prob:etr-reduction} is closed.
+\end{remark}

@@ -1,0 +1,67 @@
+\section{Full exact-ReLU algebra}
+\label{app:relu}
+
+This appendix expands the proof obligations behind
+\cref{lem:relu-complementarity,lem:relu-polynomialization}.
+
+\subsection{Case partition}
+
+The equation \(a(a-z)=0\) gives the algebraic alternatives
+\(a=0\) and \(a=z\).  The two weak inequalities select the valid half of each
+branch:
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+Algebraic branch & Consequence of inequalities & ReLU regime & Included boundary\\
+\midrule
+\(a=0\) & \(z\le0\) & inactive & \(z=0\)\\
+\(a=z\) & \(z\ge0\) & active & \(z=0\)\\
+\bottomrule
+\end{tabular}
+\end{center}
+At \(z=a=0\), both algebraic branches meet, but they represent the same ReLU
+assignment.  The complementarity description therefore has no spurious
+\((z,a)\)-point.
+
+\subsection{Square-slack fibers}
+
+If \(a>0\), the equation \(a=u^2\) has two real slack witnesses.  If \(a=0\),
+it has the unique witness \(u=0\).  The same holds for \(a-z=v^2\).  Hence the
+projection of the slack variety to \((z,a)\) is exactly the ReLU graph, although
+the map is generally many-to-one.
+
+For one gate, the equality-only encoding adds two variables and three
+equalities, all of degree at most two.  For \(G\) ReLU gates and \(N\) samples,
+the construction adds \(2GN\) real variables and \(3GN\) polynomial
+equalities.  With an explicit architecture and dataset, this is polynomial in
+the input length.
+
+\subsection{Boundary Jacobian}
+
+For
+\begin{align}
+ h_1&=a-u^2,\\
+ h_2&=a-z-v^2,\\
+ h_3&=a(a-z),
+\end{align}
+the Jacobian in \((z,a,u,v)\) at the boundary origin is
+\begin{equation}
+  \begin{bmatrix}
+   0&1&0&0\\
+   -1&1&0&0\\
+   0&0&0&0
+  \end{bmatrix}.
+\end{equation}
+The complementarity row vanishes and the slack derivatives vanish.  Thus
+existential square polynomialization provides exact semantics but does not
+remove singular behavior from the equality presentation.
+
+\subsection{Formal verification correspondence}
+
+The Lean theorem
+\path{exactReLU_iff_complementarity} proves
+\cref{lem:relu-complementarity}.  The theorem
+\path{exactReLU_iff_polynomialized} proves
+\cref{lem:relu-polynomialization}.  Separate lemmas cover active, inactive, and
+boundary regimes.  These results concern the scalar gate and are composed
+sample-by-sample in the mathematical encoding.

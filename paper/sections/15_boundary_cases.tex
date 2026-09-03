@@ -1,0 +1,42 @@
+\section{Globality, singularities, and ReLU switching boundaries}
+\label{sec:boundary}
+
+The exact ReLU encoding covers the switching boundary semantically.  At
+\(z=a=0\), however, the complementarity polynomial has vanishing gradient.
+Thus an argument that identifies cotangent rank with the codimension of a
+smooth real manifold cannot be extended to this point without additional
+work.
+
+\subsection{Strata and their intersections}
+
+For a fixed activation pattern, ReLU constraints reduce to affine equalities
+and weak sign conditions.  The complete network is the union over activation
+patterns, with different strata meeting where one or more preactivations
+vanish.  An exact decision procedure must account for all strata and their
+intersections.  Enumerating patterns directly can be exponential in the number
+of gates.
+
+Square-slack variables encode the weak inequalities without selecting a
+pattern, but they do not make the resulting variety smooth.  At a zero slack,
+the derivative of \(u^2\) also vanishes.  Hence polynomialization preserves the
+exact feasible projection while potentially adding singular coordinates.
+
+\subsection{Three levels of information}
+
+The following objects must not be conflated:
+\begin{enumerate}
+  \item the global module \(\Om_{\cR/\R}\) over the coordinate ring;
+  \item its fiber, or an evaluated Jacobian row space, at a chosen real point;
+  \item the zeroth-order semialgebraic projection of the real solution set.
+\end{enumerate}
+The tensor and K\"ahler decompositions concern the first object.  Differential
+CMP operates on the second.  Exact-NNTP feasibility is determined by the third.
+
+\subsection{The obstruction is stronger than a boundary problem}
+
+Although boundary completeness remains necessary for any all-ReLU theorem,
+the audit family in \cref{sec:global-exactness} lies on the active branch with
+\(y>0\).  Its failure shows that a smooth-locus extension cannot by itself
+upgrade first-order CMP to a zeroth-order decider.  Both issues must be solved:
+the message must retain exact feasible-set information, and it must handle
+singular switching strata.

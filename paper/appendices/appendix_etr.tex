@@ -1,0 +1,62 @@
+\section{ETR reduction obligations}
+\label{app:etr}
+
+This appendix records a proof template for
+\cref{prob:etr-reduction}.  Normalize the source formula to a conjunction of
+primitive constraints only after proving that the normalization has polynomial
+size and preserves satisfiability.  A suitable primitive source language might
+contain
+\begin{equation}
+ x_i=c,\qquad x_i+x_j=x_k,\qquad x_ix_j=x_k,
+ \qquad x_i\ge0,
+\end{equation}
+but the completeness and normalization theorem for the chosen language must be
+cited or proved.
+
+For each primitive constraint, a network gadget must come with a relation
+\(R_G\) between its interface values and satisfy
+\begin{equation}
+ R_G(\text{interface})
+ \quad\Longleftrightarrow\quad
+ \text{source primitive holds}.
+\end{equation}
+The reverse implication is essential: additional trainable weights or
+activation branches must not create spurious satisfying assignments.
+
+\subsection{Composition requirements}
+
+Gadgets must compose while preserving one value for every repeated source
+variable.  If source variables are represented by shared trainable parameters,
+the reduction must show that all required occurrences of a parameter are legal
+under the architecture encoding.  If they are represented by activations, the
+reduction must supply equality/copy gadgets and handle negative values.
+
+The final construction must use exact target equalities as specified in
+\cref{sec:problem}; importing a theorem for total squared error below a
+threshold requires an explicit conversion.  Likewise, a theorem for a
+different activation or for trainable architecture cannot be cited as hardness
+for this language without a reduction.
+
+\subsection{Audit table for every gadget}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{0.60\linewidth}}
+\toprule
+Audit item & Required proof\\
+\midrule
+Forward correctness & Every source assignment extends to a network witness.\\
+Reverse correctness & Every network witness restricts to a valid source assignment.\\
+Boundary behavior & Zero preactivations introduce no extra source solutions.\\
+Size & Nodes, edges, samples, and states grow polynomially.\\
+Height & All rational coefficients have polynomial bit length.\\
+Uniformity & A Turing machine constructs the encoded instance in polynomial time.\\
+Scope & The output is exactly an instance of \(\ExactNNTP\).\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Only after every row is discharged may the manuscript state
+\begin{equation}
+  \mathrm{ETR}\le_p\ExactNNTP
+\end{equation}
+as an unconditional theorem.

@@ -1,0 +1,63 @@
+\section{Dependency topology and separators}
+\label{sec:topology}
+
+Construct a primal dependency graph whose vertices are scalar variables and in
+which two variables are adjacent when they occur together in an input
+constraint.  A coarse tree decomposition is obtained from the bags
+\begin{equation}
+  B_i=\{\theta_1,\ldots,\theta_P\}\cup S^{(i)}
+  \qquad(i\in[N]),
+  \label{eq:sample-bags}
+\end{equation}
+connected through a central parameter bag
+\begin{equation}
+  B_0=\{\theta_1,\ldots,\theta_P\}.
+\end{equation}
+
+\begin{proposition}[Star decomposition]
+\label{prop:star-decomposition}
+The bags \(B_0,B_1,\ldots,B_N\), with every \(B_i\) adjacent to \(B_0\), form
+a tree decomposition of the coarse sample-local dependency graph.
+\end{proposition}
+
+\begin{proof}
+Every constraint belongs to one sample and therefore all of its variables lie
+in the corresponding bag \(B_i\).  Each local variable occurs in only that bag.
+Each parameter occurs in the center and in every sample bag, which is a
+connected subtree.  Hence the edge-cover and running-intersection conditions
+hold.
+\end{proof}
+
+\begin{corollary}[Width bound]
+\label{cor:treewidth}
+If \(K=\max_iK_i\), then
+\begin{equation}
+  \boxed{\tw(G)\le P+K-1.}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The largest bag in \cref{eq:sample-bags} has at most \(P+K\) vertices.
+\end{proof}
+
+Increasing \(N\) adds bags but does not enlarge their shared intersection.
+This fact explains why sample-wise linear algebra can scale linearly with
+\(N\) once the parameter and local dimensions are fixed.
+
+\begin{remark}[What treewidth does not prove]
+A tree decomposition specifies where elimination may occur.  An exact dynamic
+program also needs a closed message language whose size and update time are
+controlled.  For discrete variables of bounded domain, a table can have size
+exponential in the bag width and independent of the total number of bags.  For
+real polynomial constraints, a projected semialgebraic set can require new
+polynomials, sign conditions, and components.  The numerical dimension of a
+separator does not by itself bound this descriptive growth.
+\end{remark}
+
+\begin{remark}[Uniform and parameterized readings]
+The width bound supports a parameterized analysis in \(P+K\).  A claim of
+uniform polynomial time additionally requires polynomial dependence on
+\(P+K\), not merely tractability for each fixed width.  The cubic linear-algebra
+bound later in the paper has that dependence for evaluated matrices; the exact
+semialgebraic message problem does not yet have such a bound.
+\end{remark}

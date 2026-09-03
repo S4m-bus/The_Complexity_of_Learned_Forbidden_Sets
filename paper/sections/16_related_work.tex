@@ -1,0 +1,45 @@
+\section{Related work}
+\label{sec:related-work}
+
+\paragraph{The existential theory of the reals.}
+ETR is the nonemptiness problem for semialgebraic sets presented by existential
+formulas.  Its role as a complexity class, known complete problems, and the
+containments between NP and PSPACE are surveyed by Schaefer, Cardinal, and
+Miltzow~\cite{SchaeferCardinalMiltzow2024}.  General decision and quantifier
+elimination algorithms include cylindrical algebraic decomposition
+\cite{Collins1975}, the PSPACE method of Canny~\cite{Canny1988}, and the
+complexity analyses of Renegar~\cite{Renegar1992I}; see also
+\cite{BasuPollackRoy2006}.
+
+\paragraph{Exact neural network training and verification.}
+Abrahamsen, Kleist, and Miltzow proved \(\ExistsR\)-completeness for a neural
+network training problem~\cite{AbrahamsenKleistMiltzow2021}.  Their result makes
+precise why a claimed polynomial-time exact training decider requires an
+equally precise comparison of formal languages.  ReLU network verification has
+also motivated specialized satisfiability procedures such as
+Reluplex~\cite{KatzEtAl2017}.  Verification of a fixed network and existential
+training of its weights are related semialgebraic problems but have different
+quantified variables and should not be identified without a reduction.
+
+\paragraph{K\"ahler differentials.}
+K\"ahler differentials provide a functorial algebraic representation of
+derivations, conormal relations, and tangent/cotangent information.  The
+Jacobian presentation, base change, tensor-product formula, and transitivity
+sequence used here are standard commutative algebra
+\cite{Eisenbud1995,StacksDifferentials}.  Their availability over singular
+rings does not make a first-order invariant a complete description of real
+points.
+
+\paragraph{Treewidth and elimination.}
+Tree decompositions expose small interfaces between otherwise separated
+subproblems~\cite{Bodlaender1996}.  Exact message passing is efficient when the
+message domain has a bounded representation closed under local combination and
+elimination.  In this paper the star decomposition is elementary; the research
+question is the representation complexity of real semialgebraic separator
+messages.
+
+\paragraph{Exact linear algebra.}
+The arithmetic-operation count for CMP uses conventional dense elimination.
+Fraction-free methods such as Bareiss elimination control intermediate integer
+growth for exact rational matrices~\cite{Bareiss1968}.  These methods do not
+replace nonlinear real projection or construct a feasible evaluation point.

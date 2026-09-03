@@ -1,0 +1,94 @@
+\section{Time, space, and bit complexity}
+\label{sec:complexity}
+
+\subsection{Arithmetic complexity of differential CMP}
+
+Let \(K=\max_iK_i\) and \(k=P+K\).  Suppose every evaluated Jacobian block is
+an explicitly supplied matrix over a field and has dimensions \(O(k)\).
+Classical dense elimination computes a null-space basis, multiplies the
+surviving blocks, and row-reduces the result using \(O(k^3)\) field operations
+per bag.  Therefore
+\begin{equation}
+  T_{\mathrm{arith}}(N,P,K)=O\bigl(N(P+K)^3\bigr).
+  \label{eq:arithmetic-complexity}
+\end{equation}
+This is a valid bound for \cref{thm:differential-cmp-correct}.
+
+If \(N,P,K\le n\), then
+\begin{equation}
+  N(P+K)^3
+  \le n(2n)^3
+  =8n^4.
+  \label{eq:uniform-arithmetic-inequality}
+\end{equation}
+Thus the number of field operations is uniformly \(O(n^4)\) once the matrices
+are present.  For fixed \(P,K\), \cref{eq:arithmetic-complexity} is linear in
+\(N\).
+
+\subsection{Space}
+
+A streaming implementation that processes and discards leaf matrices uses
+\begin{equation}
+  O\bigl(V+E+(P+K)^2\bigr)
+  \label{eq:streaming-space}
+\end{equation}
+field elements in addition to constant bookkeeping per bag, where \(V+E\)
+denotes the explicitly stored constraint incidence structure.  Retaining all
+messages uses
+\begin{equation}
+  O\bigl(V+E+N(P+K)^2\bigr)
+\end{equation}
+field elements.
+
+\subsection{Why arithmetic counting is not a P theorem}
+
+Membership in \(P\) is a bit-complexity statement.  The following data must be
+specified and bounded:
+
+\begin{enumerate}
+  \item the representation of every coefficient;
+  \item the bit length of intermediate matrix entries;
+  \item the cost of exact zero testing and rank decisions;
+  \item the representation of any algebraic real at which a Jacobian is
+  evaluated; and
+  \item the size and construction cost of the zeroth-order message needed for
+  global feasibility.
+\end{enumerate}
+
+For an explicitly given rational matrix, fraction-free elimination controls
+coefficient growth and yields polynomial bit complexity in the matrix
+dimensions and input bit length~\cite{Bareiss1968}.  This fact does not close
+the present proof: a feasible point can have irrational coordinates and is not
+part of the input, while finding or deciding the existence of such a point is
+the original nonlinear problem.
+
+Similarly, treating symbolic entries as elements of a multivariate quotient
+ring changes the operation model.  Rank, kernels, and equality testing over
+that ring cannot be charged as unit-cost field operations.  Their
+representations can require polynomial reduction, localization, or ideal
+membership computations.
+
+\begin{theorem}[Conditional bit-complexity implication]
+\label{thm:conditional-bit}
+Assume there is an exact CMP representation satisfying
+\cref{prob:polynomial-semantic-message}, with total bit running time
+\begin{equation}
+  N\,\poly(P+K,L)
+  \label{eq:desired-bit-bound}
+\end{equation}
+and a polynomial-time root nonemptiness test.  Then
+\(\ExactNNTP\in P\).
+\end{theorem}
+
+\begin{proof}
+The instance dimensions and coefficient lengths are bounded by its explicit
+binary encoding length.  Under the assumed bound, the stated CMP procedure is
+a deterministic polynomial-time Turing decider whose acceptance semantics is
+exactly \(\Feas(I)\).
+\end{proof}
+
+\begin{remark}[Current status]
+The hypothesis of \cref{thm:conditional-bit} is \openstatus.  Equation
+\cref{eq:uniform-arithmetic-inequality} proves only the arithmetic inequality;
+it does not construct a global decider.
+\end{remark}

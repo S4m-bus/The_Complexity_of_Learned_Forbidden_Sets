@@ -1,0 +1,20 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+Exact ReLU training has a strong sample-separable algebraic structure.  Its
+coordinate ring is assembled from sample-local factors over one shared
+parameter algebra, its relative K\"ahler differentials decompose after base
+change, and its Jacobian is block-angular.  Cotangent Message Passing exploits
+this structure to eliminate local coordinates exactly in the linearized row
+space, using messages whose vector-space dimension is bounded by the separator.
+
+Exact feasibility requires more.  The one-ReLU audit family proves that the
+existing first-order message can be identical for problems with different
+zeroth-order parameter projections.  Accordingly, the present results do not
+establish a polynomial-time decider for \(\ExactNNTP\), and therefore do not
+establish \(P=\ExistsR\) or \(P=NP\).  The missing theorem is now explicit: a
+polynomially represented separator message whose denotation is the exact real
+existential projection at every subtree, together with polynomial Turing-model
+operations and a model-matching ETR reduction.  Resolving that theorem---or
+proving a barrier for the proposed message families---is the next mathematical
+task.

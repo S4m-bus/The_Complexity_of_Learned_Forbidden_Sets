@@ -1,0 +1,57 @@
+\section{Full separator factorization proof}
+\label{app:separator}
+
+Define the global linear map
+\begin{equation}
+ T:L_A\oplus L_B\to X_A\oplus X_S\oplus X_B
+\end{equation}
+by
+\begin{equation}
+ T(\lambda,\mu)=
+ (J_A\lambda,J_{AS}\lambda+J_{BS}\mu,J_B\mu).
+\end{equation}
+We wish to eliminate the \(X_A\)-coordinate from \(\im T\).  Its exact
+restriction to zero in that coordinate is
+\begin{align}
+ \mathcal Z
+ &:={\{(s,b): (0,s,b)\in\im T\}}\\
+ &=\{(J_{AS}\lambda+J_{BS}\mu,J_B\mu):
+        J_A\lambda=0\}.
+ \label{eq:restricted-global-image}
+\end{align}
+Since \(J_{AS}\lambda\) ranges exactly over
+\(\cE(A\to S)=J_{AS}(\kernel J_A)\), we obtain
+\begin{equation}
+ \mathcal Z=
+ \{(e+J_{BS}\mu,J_B\mu):e\in\cE(A\to S),\ \mu\in L_B\}.
+\end{equation}
+This is \cref{thm:linear-separator-factorization} as an equality of sets.
+
+\subsection{Uniqueness at the level of subspaces}
+
+The construction \(J_{AS}(\kernel J_A)\) is canonical for the given pair of
+linear maps.  A matrix \(P_A^\perp\) is only a choice of generators.  If
+\(P\) and \(P'\) are full-row-rank matrices with the same row space, there is an
+invertible change-of-basis matrix \(U\) with \(P'=UP\), and hence
+\begin{equation}
+ \rowspan(P'J_{AS})=\rowspan(UPJ_{AS})=\rowspan(PJ_{AS}).
+\end{equation}
+If dependent rows are allowed, equality of the image subspace still follows
+from the intrinsic definition.
+
+\subsection{Recursive invariant for linear systems}
+
+For a rooted tree of block-linear systems, let \(L_v\) be the row-coefficient
+space in the subtree and let \(X_{S_v}\) be the parent-separator coordinate
+space.  The message is the image on \(X_{S_v}\) of those row combinations whose
+coordinates internal to the subtree vanish.  The leaf case is
+\cref{def:intrinsic-message}; the induction step is
+\cref{thm:linear-separator-factorization} after stacking child messages with
+the current rows.  At the root, the message therefore gives exactly the
+relations in the global linear row space after all nonroot coordinates have
+been eliminated.
+
+This invariant concerns generated linear relations.  Replacing ``row
+combination whose internal coordinates vanish'' by ``assignment extendable to
+a nonlinear real solution'' changes the semantic object and invalidates this
+proof.

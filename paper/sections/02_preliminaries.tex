@@ -1,0 +1,115 @@
+\section{Background and preliminaries}
+\label{sec:preliminaries}
+
+\subsection{The existential theory of the reals}
+
+An existential sentence over the reals has the form
+\begin{equation}
+  \exists x_1,\ldots,x_m\in\R:\;
+  \Psi(x_1,\ldots,x_m),
+\end{equation}
+where \(\Psi\) is a quantifier-free Boolean combination of polynomial sign
+conditions with integer coefficients.  The decision problem ETR asks whether
+such a sentence is true.  The class \(\ExistsR\) is the closure of ETR under
+polynomial-time many-one reductions.  Standard containments give
+\begin{equation}
+  P\subseteq NP\subseteq\ExistsR\subseteq PSPACE.
+\end{equation}
+We use the discrete Turing model: coefficients and combinatorial structure are
+encoded by finite binary strings, while quantified witnesses range over the
+reals.  Surveys and algorithms for real feasibility may be found in
+\cite{BasuPollackRoy2006,Renegar1992I,SchaeferCardinalMiltzow2024}; Canny's
+algorithm supplies the PSPACE upper bound~\cite{Canny1988}.
+
+\begin{definition}[Semialgebraic set]
+A subset \(X\subseteq\R^d\) is semialgebraic if it is defined by a finite
+Boolean combination of polynomial equalities and inequalities with real
+coefficients.  A \emph{basic} semialgebraic set is defined by a conjunction of
+such sign conditions.
+\end{definition}
+
+Existentially quantified square variables can replace weak nonnegativity:
+\begin{equation}
+  t\geq 0 \quad\Longleftrightarrow\quad \exists u\in\R:\;t=u^2.
+  \label{eq:square-slack}
+\end{equation}
+This device permits an equality-only ambient variety whose real projection is
+the intended basic semialgebraic set.  The projection operation remains part of
+the semantics; the equality coordinate ring alone does not remember which
+variables were introduced existentially.
+
+\subsection{Coordinate rings and differentials}
+
+Let \(k\) be a commutative base field and \(B\) a finitely generated
+\(k\)-algebra.  The module of K\"ahler differentials \(\Om_{B/k}\) is the
+\(B\)-module equipped with a universal \(k\)-derivation
+\(d:B\to\Om_{B/k}\).  For a tower \(k\to A\to B\), there is a right-exact
+transitivity sequence
+\begin{equation}
+  B\otimes_A\Om_{A/k}
+  \longrightarrow \Om_{B/k}
+  \longrightarrow \Om_{B/A}
+  \longrightarrow 0.
+  \label{eq:kahler-transitivity}
+\end{equation}
+These standard constructions are reviewed, for example, in
+\cite{Eisenbud1995,StacksDifferentials}.
+
+If
+\begin{equation}
+  B=k[x_1,\ldots,x_n]/(f_1,\ldots,f_m),
+\end{equation}
+then \(\Om_{B/k}\) admits the presentation
+\begin{equation}
+  B^m \xrightarrow{J_F^{\mathsf T}} B^n
+  \longrightarrow \Om_{B/k}\longrightarrow 0,
+  \label{eq:jacobian-presentation}
+\end{equation}
+where \(J_F=(\partial f_i/\partial x_j)\).  This is a module over the entire
+quotient ring.  Evaluating at a real point \(p\) tensors the presentation with
+the residue field at \(p\) and produces pointwise cotangent information.  The
+symbolic module and any one evaluated vector space are distinct objects.
+
+\subsection{Linear maps and intrinsic messages}
+
+Let \(J_A:L_A\to X_A\) and \(J_{AS}:L_A\to X_S\) be linear maps over a field.
+The intrinsic separator message is
+\begin{equation}
+  \cE(A\to S)
+  :=J_{AS}(\kernel J_A)\subseteq X_S.
+  \label{eq:intrinsic-linear-message}
+\end{equation}
+If the maps are represented by row blocks and \(P_A^\perp\) has rows spanning
+the relevant left null space, then a matrix representing the same subspace is
+\begin{equation}
+  M_{A\to S}=P_A^\perp J_{AS}.
+\end{equation}
+The subspace, rather than the chosen basis matrix, is the invariant.
+
+\subsection{Tree decompositions}
+
+A tree decomposition of a graph \(G=(V,E)\) is a tree whose nodes carry bags
+\(B_t\subseteq V\) such that every vertex appears in a connected family of
+bags and every edge is contained in some bag.  Its width is
+\(\max_t|B_t|-1\); the treewidth \(\tw(G)\) is the minimum width.  Bounded
+treewidth often enables exact dynamic programming when each separator message
+has a controlled representation~\cite{Bodlaender1996}.  Treewidth alone does
+not bound the descriptive complexity of projected semialgebraic sets.
+
+\subsection{Proof-status vocabulary}
+
+To prevent a conditional dependency from being silently promoted, we use four
+labels in this draft:
+\begin{center}
+\begin{tabular}{>{\bfseries}l p{0.72\linewidth}}
+\toprule
+Proved & A complete mathematical proof is present or a cited standard result
+applies with its hypotheses checked.\\
+Conditional & The implication is proved assuming explicitly named
+certificates or lemmas.\\
+Open & The statement is required by the target theorem but is not presently
+derived.\\
+Refuted & A counterexample disproves the statement as formulated.\\
+\bottomrule
+\end{tabular}
+\end{center}

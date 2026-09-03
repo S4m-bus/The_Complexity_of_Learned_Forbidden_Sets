@@ -1,0 +1,68 @@
+\section{Discussion and repair program}
+\label{sec:discussion}
+
+The structural decomposition remains useful despite the failed completeness
+claim.  It identifies exactly where samples interact and provides a compact
+description of infinitesimal compatibility.  The counterexample identifies the
+minimum semantic information that any exact extension must add.
+
+\subsection{Potential message enrichments}
+
+The following are research directions rather than established polynomial-time
+repairs.
+
+\paragraph{Semialgebraic projection messages.}
+Using the exact set in \cref{eq:zeroth-order-message} gives perfect semantics.
+The unresolved issue is whether this special family has polynomial descriptive
+complexity and supports polynomial-time elimination.  General quantifier
+elimination does not supply the desired bound.
+
+\paragraph{Affine or homogenized first-order messages.}
+Augmenting a derivative matrix with constant terms prevents the immediate loss
+of \(y\) in the audit family and is exact for affine constraint systems.  For
+nonlinear systems, an affine row space still does not generally determine the
+zero set or its projection.
+
+\paragraph{Higher jets.}
+Higher-order derivative data can retain more of a bounded-degree polynomial.
+A successful method would need a uniform order, a basis-independent merge
+operation, correct treatment of inequalities and real components, and a
+polynomial representation bound.  None follows from the first-order separator
+theorem.
+
+\paragraph{Ideals, real radicals, and elimination ideals.}
+An algebraic message could retain an elimination ideal rather than a cotangent
+subspace.  Ordinary elimination ideals describe Zariski closures of complex
+projections; exact real feasibility can additionally require inequalities and
+real-radical information.  Gr\"obner or quantifier-elimination representations
+may grow substantially.  The special block structure would have to yield a new
+bound.
+
+\subsection{Priority order for the target theorem}
+
+Further work should proceed in the following dependency order:
+\begin{enumerate}
+  \item propose a zeroth-order message representation that distinguishes the
+  audit family;
+  \item prove its exact semantic invariant for leaf, merge, contraction, and
+  root operations;
+  \item attack it with small disconnected, singular, and incompatible-target
+  instances;
+  \item prove a polynomial representation-size theorem;
+  \item derive a Turing bit-complexity bound;
+  \item formalize the model-matching ETR reduction; and
+  \item only then instantiate the conditional collapse theorem.
+\end{enumerate}
+
+This ordering prevents an arithmetic speedup for an auxiliary linear problem
+from being mistaken for a complexity classification of the nonlinear decision
+language.
+
+\subsection{A publishable unconditional core}
+
+Independently of the open collapse target, the following package is
+unconditional: exact ReLU polynomialization including the boundary; the
+shared-base tensor decomposition; the relative K\"ahler decomposition; the
+block-angular Jacobian; the intrinsic linear CMP factorization; and the
+in-scope impossibility theorem for cotangent-only exact decoding.  A future
+positive algorithm can build on this audited base.
