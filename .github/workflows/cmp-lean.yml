@@ -1,0 +1,39 @@
+name: CMP Lean Verification
+
+on:
+  push:
+    branches: [cmp-lean-verification]
+  pull_request:
+    branches: [main]
+    paths:
+      - 'CMPLean/**'
+      - 'CMPLean.lean'
+      - 'lakefile.toml'
+      - 'lean-toolchain'
+      - '.github/workflows/cmp-lean.yml'
+
+concurrency:
+  group: cmp-lean-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bootstrap Lean and Mathlib
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          $HOME/.elan/bin/lake update
+          $HOME/.elan/bin/lake exe cache get
+      - name: Kernel build
+        run: |
+          lake build
+      - name: Proof-hole audit
+        run: |
+          if grep -R -n -E '\bsorry\b|\badmit\b|^axiom ' CMPLean; then
+            echo 'Proof hole or custom axiom detected.'
+            exit 1
+          fi
+          echo 'No sorry/admit/custom axiom found in CMPLean.'
